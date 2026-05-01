@@ -1,6 +1,13 @@
 # cnki-science-scholar-crawler
 知网-science文献采集浏览器插件
 
+# 🔍 AI-Assisted Literature Collector (AI学术文献采集助手)
+
+[![GitHub stars](https://img.shields.io/github/stars/tongyining/cnki-science-scholar-crawler)]()
+[![GitHub license](https://img.shields.io/github/license/tongyining/cnki-science-scholar-crawler)]()
+
+**AI-Assisted Literature Collector** 是一个专为研究生和科研人员设计的浏览器插件，用于解决文献综述阶段海量文献检索效率低下的问题。它能根据AI生成的关键词，从 **CNKI (知网)** 和 **Science** 等主流学术数据库中，**自动抓取成百上千篇**相关文献，帮助你将文献调研时间从数小时缩短至十几分钟，是撰写毕业论文和学术论文的强大辅助工具。
+
 ![插件界面截图](/images/plugin-screenshot.png)
 
 # 文献智能采集助手
@@ -60,7 +67,8 @@
 - 课题前期调研
 
 
+## 💡 如果需要高级版本，请支付1USDT到下面的账号，并附带留言，之后会把你拉入GitHub的team
 
 
-
+![USDT钱包收款地址图](/images/usdt.png)
 
