@@ -3,6 +3,7 @@
 
 ![插件界面截图](/images/plugin-screenshot.png)
 
+![插件界面截图](https://github.com/tongyining/cnki-science-scholar-crawler/master/images/plugin-screenshot.png)
 
 
 
