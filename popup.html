@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>论文自动化</title>
+    <style>
+        body {
+            width: 400px;
+            padding: 10px;
+            font-family: sans-serif;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            margin-right: 5px;
+            margin-bottom: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
+        .status {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #333;
+        }
+        
+        .section {
+            border-top: 1px solid #ccc;
+            margin-top: 15px;
+            padding-top: 10px;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .site-select {
+            margin-bottom: 10px;
+        }
+        
+        .site-select label {
+            margin-right: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: #eee;
+            margin-top: 10px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background-color: #4caf50;
+            transition: width 0.3s;
+        }
+        
+        /* 遮罩层样式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80%;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-header {
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-body {
+            padding: 15px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .modal-footer {
+            padding: 10px 15px;
+            background-color: #f5f5f5;
+            border-top: 1px solid #ddd;
+            text-align: right;
+        }
+        
+        .close-btn {
+            cursor: pointer;
+            font-size: 20px;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 6px;
+            text-align: left;
+            vertical-align: top;
+        }
+        
+        th {
+            background-color: #f5f5f5;
+        }
+        
+        .export-btn {
+            margin-left: 10px;
+        }
+        
+        .tab-buttons {
+            margin-bottom: 10px;
+        }
+        
+        .tab-btn {
+            margin-right: 5px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        .modal-content.fullscreen {
+    width: 98% !important;
+    max-width: 98% !important;
+    height: 95% !important;
+    max-height: 95% !important;
+}
+    </style>
+</head>
+
+<body>
+    <!-- 现有下载功能区域 -->
+    <div class="section">
+        <div class="section-title">📥 文献下载</div>
+        <textarea id="titlesInput" placeholder="每行一个文献标题..."></textarea>
+        <div>
+            <button id="startBtn">▶ 开始下载</button>
+            <button id="pauseBtn">⏸ 暂停</button>
+            <button id="resumeBtn">▶ 恢复</button>
+        </div>
+    </div>
+    
+    <!-- 新增采集功能区域 -->
+    <div class="section">
+        <div class="section-title">🔍 文献标题采集</div>
+        <div class="site-select">
+            <span>采集源：</span>
+            <label>
+                <input type="radio" name="siteType" value="cnki" checked> 中国知网
+            </label>
+            <label>
+                <input type="radio" name="siteType" value="science"> Science
+            </label>
+        </div>
+        <textarea id="collectionKeywords" placeholder="每行一个关键词...&#10;例如：&#10;乳腺癌&#10;breast cancer"></textarea>
+        <div>
+            <button id="startCollectionBtn">🚀 开始采集</button>
+            <button id="pauseCollectionBtn">⏸ 暂停采集</button>
+            <button id="viewResultsBtn">📊 查看结果</button>
+            <button id="clearResultsBtn">🗑 清空结果</button>
+            <button id="getchromestorage">查看存储里面的内容</button>
+        </div>
+        <div id="collectionStatus" class="status">就绪</div>
+        <div id="collectionProgress" class="progress-bar" style="display: none;">
+            <div class="progress-fill"></div>
+        </div>
+
+    </div>
+    <!-- 新增手动采集区域 -->
+    <div class="section">
+        <div class="section-title">🖱️ 手动采集当前页（Science）</div>
+        <div style="margin-bottom: 8px;">
+            <label>
+                <input type="radio" name="batchChoice" value="latest" checked> 添加到最新批次
+            </label>
+            <label style="margin-left: 15px;">
+                <input type="radio" name="batchChoice" value="new"> 新建批次
+            </label>
+        </div>
+        <div>
+            <button id="manualCollectBtn">📄 采集当前页数据</button>
+        </div>
+        <div id="manualCollectStatus" class="status" style="margin-top: 6px;">就绪</div>
+    </div>
+    <div class="section">
+        <div class="section-title">📚 历史采集批次（最近10批）</div>
+        <div id="batchList" style="max-height: 200px; overflow-y: auto; font-size: 12px;"></div>
+    </div>
+    
+    <div class="status" id="status">就绪</div>
+    
+    <!-- 结果展示遮罩层 -->
+    <div id="resultModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>📋 采集结果</span>
+                <div>
+                    <button id="fullscreenBtn" class="fullscreen-btn" style="margin-right: 10px;">⛶</button>
+                    <button class="close-btn">✕</button>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <div class="tab-buttons">
+                    <button id="tabAllBtn" class="tab-btn">全部结果</button>
+                    <button id="tabChineseBtn" class="tab-btn">中文文献</button>
+                    <button id="tabEnglishBtn" class="tab-btn">英文文献</button>
+                    <button id="exportExcelBtn" class="export-btn">📎 导出Excel</button>
+                </div>
+                <div id="tabAll" class="tab-content active">
+                    <div id="allResultsTable"></div>
+                </div>
+                <div id="tabChinese" class="tab-content">
+                    <div id="chineseResultsTable"></div>
+                </div>
+                <div id="tabEnglish" class="tab-content">
+                    <div id="englishResultsTable"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button  class="close-footer-btn">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+
+</html>
