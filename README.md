@@ -70,5 +70,33 @@
 ## 💡 如果需要高级版本，请支付1USDT到下面的账号，并附带留言，之后会把你拉入GitHub的team
 
 
-![USDT钱包收款地址图](/images/usdt.png)
+![USDT钱包收款地址图](/images/usdt.jpg)
+
+
+
+💡 Payment Info:
+
+Network: TRC20 (Tron)
+
+Address: TCn4F4T84fR6tq6maUFeUeLWbpAF9Ymofs
+
+Memo: Not required (None)
+
+Note: Please make sure you have ~30 TRX in your wallet for the gas fee if you are sending from a personal wallet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
