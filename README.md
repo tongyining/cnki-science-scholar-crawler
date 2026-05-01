@@ -70,8 +70,8 @@
 ## 💡 如果需要高级版本，请支付1USDT到下面的账号，并附带留言，之后会把你拉入GitHub的team
 
 
-![USDT钱包收款地址图](/images/usdt.jpg)
-
+![USDT钱包收款地址图]
+<img src="/images/usdt.jpg" alt="USDT钱包收款地址图" width="300">
 
 
 💡 Payment Info:
