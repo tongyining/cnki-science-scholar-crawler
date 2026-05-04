@@ -1,0 +1,38 @@
+{
+    "name": "论文自动下载",
+    "version": "2.0",
+    "description": "知网文献自动化采集",
+    "permissions": ["activeTab", "tabs", "scripting","storage", "downloads","notifications"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": [
+            "dexie.min.js", 
+            "content.js"
+        ]
+    }],
+    "action": {
+        "default_title": "论文自动化",
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icon16.png",
+            "32": "icon32.png"
+        }
+    },
+    "host_permissions": [
+        "http://127.0.0.1:9005/",
+        "http://127.0.0.1:9006/",
+        "https://kns.cnki.net/*",
+        "https://www.science.org/*"
+    ],
+    "web_accessible_resources": [{
+        "resources": ["page-crawler.js"],
+        "matches": ["<all_urls>"]
+    }],
+    "manifest_version": 3
+}
+
+
+
