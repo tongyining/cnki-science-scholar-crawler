@@ -158,76 +158,90 @@
             display: block;
         }
         .modal-content.fullscreen {
-    width: 98% !important;
-    max-width: 98% !important;
-    height: 95% !important;
-    max-height: 95% !important;
-}
+            width: 98% !important;
+            max-width: 98% !important;
+            height: 95% !important;
+            max-height: 95% !important;
+        }
     </style>
 </head>
 
 <body>
-    <!-- 现有下载功能区域 -->
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 data-i18n="title">论文自动化</h2>
+        <select id="langSwitcher">
+            <option value="zh" data-i18n="lang_zh">中文</option>
+            <option value="en" data-i18n="lang_en">English</option>
+            <option value="ja" data-i18n="lang_ja">日本語</option>
+            <option value="de" data-i18n="lang_de">Deutsch</option>
+            <option value="fr" data-i18n="lang_fr">Français</option>
+        </select>
+    </div>
+
+    <!-- 下载区域 -->
     <div class="section">
-        <div class="section-title">📥 文献下载</div>
-        <textarea id="titlesInput" placeholder="每行一个文献标题..."></textarea>
+        <div class="section-title" data-i18n="download_section">📥 文献下载</div>
+        <textarea id="titlesInput" data-i18n-placeholder="titles_placeholder"></textarea>
         <div>
-            <button id="startBtn">▶ 开始下载</button>
-            <button id="pauseBtn">⏸ 暂停</button>
-            <button id="resumeBtn">▶ 恢复</button>
+            <button id="startBtn" data-i18n="btn_start">▶ 开始下载</button>
+            <button id="pauseBtn" data-i18n="btn_pause">⏸ 暂停</button>
+            <button id="resumeBtn" data-i18n="btn_resume">▶ 恢复</button>
         </div>
     </div>
-    
-    <!-- 新增采集功能区域 -->
+
+    <!-- 采集区域 -->
     <div class="section">
-        <div class="section-title">🔍 文献标题采集</div>
+        <div class="section-title" data-i18n="collection_section">🔍 文献标题采集</div>
         <div class="site-select">
-            <span>采集源：</span>
+            <span data-i18n="source_cnki">采集源：</span>
             <label>
-                <input type="radio" name="siteType" value="cnki" checked> 中国知网
+                <input type="radio" name="siteType" value="cnki" checked> <span data-i18n="source_cnki">中国知网</span>
             </label>
             <label>
-                <input type="radio" name="siteType" value="science"> Science
+                <input type="radio" name="siteType" value="science"> <span data-i18n="source_science">Science</span>
             </label>
         </div>
-        <textarea id="collectionKeywords" placeholder="每行一个关键词...&#10;例如：&#10;乳腺癌&#10;breast cancer"></textarea>
+        <textarea id="collectionKeywords" data-i18n-placeholder="keywords_placeholder"></textarea>
         <div>
-            <button id="startCollectionBtn">🚀 开始采集</button>
-            <button id="pauseCollectionBtn">⏸ 暂停采集</button>
-            <button id="viewResultsBtn">📊 查看结果</button>
-            <button id="clearResultsBtn">🗑 清空结果</button>
-            <button id="getchromestorage">查看存储里面的内容</button>
+            <button id="startCollectionBtn" data-i18n="btn_start_collect">🚀 开始采集</button>
+            <button id="pauseCollectionBtn" data-i18n="btn_pause_collect">⏸ 暂停采集</button>
+            <button id="viewResultsBtn" data-i18n="btn_view_results">📊 查看结果</button>
+            <button id="clearResultsBtn" data-i18n="btn_clear_results">🗑 清空结果</button>
+            <button id="getchromestorage" data-i18n="btn_view_storage">查看存储里面的内容</button>
         </div>
-        <div id="collectionStatus" class="status">就绪</div>
+        <div id="collectionStatus" class="status" data-i18n="status_ready">就绪</div>
         <div id="collectionProgress" class="progress-bar" style="display: none;">
             <div class="progress-fill"></div>
         </div>
-
     </div>
-    <!-- 新增手动采集区域 -->
+
+    <!-- 手动采集区域 (Science) -->
     <div class="section">
-        <div class="section-title">🖱️ 手动采集当前页（Science）</div>
+        <div class="section-title" data-i18n="manual_section">🖱️ 手动采集当前页（Science）</div>
         <div style="margin-bottom: 8px;">
             <label>
-                <input type="radio" name="batchChoice" value="latest" checked> 添加到最新批次
+                <input type="radio" name="batchChoice" value="latest" checked> <span data-i18n="radio_latest">添加到最新批次</span>
             </label>
             <label style="margin-left: 15px;">
-                <input type="radio" name="batchChoice" value="new"> 新建批次
+                <input type="radio" name="batchChoice" value="new"> <span data-i18n="radio_new">新建批次</span>
             </label>
         </div>
         <div>
-            <button id="manualCollectBtn">📄 采集当前页数据</button>
+            <button id="manualCollectBtn" data-i18n="btn_manual_collect">📄 采集当前页数据</button>
         </div>
-        <div id="manualCollectStatus" class="status" style="margin-top: 6px;">就绪</div>
+        <div id="manualCollectStatus" class="status" style="margin-top: 6px;" data-i18n="status_ready">就绪</div>
     </div>
+
+    <!-- 历史批次区域 -->
     <div class="section">
-        <div class="section-title">📚 历史采集批次（最近10批）</div>
+        <div class="section-title" data-i18n="history_section">📚 历史采集批次（最近10批）</div>
         <div id="batchList" style="max-height: 200px; overflow-y: auto; font-size: 12px;"></div>
     </div>
-    
-    <div class="status" id="status">就绪</div>
-    
-    <!-- 结果展示遮罩层 -->
+
+    <!-- 全局状态栏 -->
+    <div class="status" id="status" data-i18n="status_ready">就绪</div>
+
+    <!-- 结果展示模态框 -->
     <div id="resultModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -237,13 +251,12 @@
                     <button class="close-btn">✕</button>
                 </div>
             </div>
-
             <div class="modal-body">
                 <div class="tab-buttons">
-                    <button id="tabAllBtn" class="tab-btn">全部结果</button>
-                    <button id="tabChineseBtn" class="tab-btn">中文文献</button>
-                    <button id="tabEnglishBtn" class="tab-btn">英文文献</button>
-                    <button id="exportExcelBtn" class="export-btn">📎 导出Excel</button>
+                    <button id="tabAllBtn" class="tab-btn" data-i18n="tab_all">全部结果</button>
+                    <button id="tabChineseBtn" class="tab-btn" data-i18n="tab_chinese">中文文献</button>
+                    <button id="tabEnglishBtn" class="tab-btn" data-i18n="tab_english">英文文献</button>
+                    <button id="exportExcelBtn" class="export-btn" data-i18n="btn_export_excel">📎 导出Excel</button>
                 </div>
                 <div id="tabAll" class="tab-content active">
                     <div id="allResultsTable"></div>
@@ -256,11 +269,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button  class="close-footer-btn">关闭</button>
+                <button class="close-footer-btn" data-i18n="btn_close">关闭</button>
             </div>
         </div>
     </div>
-    
+
     <script src="popup.js"></script>
 </body>
 

@@ -28,7 +28,7 @@
         "https://www.science.org/*"
     ],
     "web_accessible_resources": [{
-        "resources": ["page-crawler.js"],
+        "resources": ["locales/*.json", "i18n.js","page-crawler.js"],
         "matches": ["<all_urls>"]
     }],
     "manifest_version": 3
